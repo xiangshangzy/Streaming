@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -13,14 +11,22 @@ class Home extends StatelessWidget {
           child: const Icon(Icons.refresh),
         ),
         body: Padding(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
                 _Header(),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
-                _Category()
+                _Category(),
+                const SizedBox(
+                  height: 16,
+                ),
+                _Caption(),
+                const SizedBox(
+                  height: 16,
+                ),
+                _ResourceGrid()
               ],
             )));
   }
@@ -34,10 +40,13 @@ class _Header extends StatelessWidget {
         width: double.infinity,
         height: 200,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             Radius.circular(24),
           ),
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme
+              .of(context)
+              .colorScheme
+              .primary,
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -49,25 +58,27 @@ class _Header extends StatelessWidget {
                 children: [
                   Text(
                     'Welcome, Alice',
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .titleLarge
                         ?.copyWith(color: Colors.grey[200]),
                   ),
-                  CircleAvatar(
+                  const CircleAvatar(
                     backgroundImage:
-                        AssetImage('assets/image/logo-gia-developer.png'),
+                    AssetImage('assets/image/logo-gia-developer.png'),
                   )
                 ],
               ),
               Text(
                 'What Would you like',
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .titleSmall
                     ?.copyWith(color: Colors.grey[100]),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               TextField(
@@ -75,7 +86,10 @@ class _Header extends StatelessWidget {
                     prefixIcon: Icon(
                       Icons.search,
                       size: 24,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary,
                     ),
                     hintText: 'Search Media File',
                     border: const OutlineInputBorder(
@@ -98,9 +112,14 @@ class _Category extends StatelessWidget {
       children: [
         Text(
           'Storage Category',
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleLarge,
         ),
-        const SizedBox(height: 8,),
+        const SizedBox(
+          height: 8,
+        ),
         const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -138,7 +157,10 @@ class _CategoryButton extends StatelessWidget {
     return Material(
       elevation: 4,
       borderRadius: BorderRadius.circular(8),
-      color: Theme.of(context).colorScheme.surface,
+      color: Theme
+          .of(context)
+          .colorScheme
+          .surface,
       child: InkWell(
           onTap: () {},
           child: SizedBox(
@@ -150,14 +172,20 @@ class _CategoryButton extends StatelessWidget {
                 Icon(
                   icon,
                   size: 36,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme
+                      .of(context)
+                      .colorScheme
+                      .primary,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
                 Text(
                   text,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleMedium,
                 )
               ],
             ),
@@ -166,71 +194,30 @@ class _CategoryButton extends StatelessWidget {
   }
 }
 
-class _Header2 extends StatelessWidget {
+class _Caption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Text(
-        'Good Morning, Maya',
-        style: Theme.of(context).textTheme.headlineSmall,
-      ),
-      GestureDetector(
-        onTap: () {},
-        child: const SizedBox(
-          width: 48,
-          height: 48,
-          child: CircleAvatar(
-            backgroundImage: AssetImage('assets/image/Cruel-Summer.jpg'),
-          ),
-        ),
-      )
-    ]);
-  }
-}
-
-class _Section extends StatelessWidget {
-  final scrollController = ScrollController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
+        Text(
+          'Home',
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleLarge,
+        ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              'Special Of Album',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            TextButton(
-                onPressed: () {},
-                child: Row(
-                  children: [
-                    Text('View all',
-                        style: Theme.of(context).textTheme.labelLarge),
-                    const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 14,
-                    )
-                  ],
-                ))
-          ],
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        GridView.count(
-          // Create a grid with 2 columns. If you change the scrollDirection to
-          // horizontal, this produces 2 rows.
-          crossAxisCount: 4,
-          // Generate 100 widgets that display their index in the List.
-          children: List.generate(5, (index) => Text('data')),
-        ),
-        Row(
-          children: [
-            // Container(child: Image.asset('assets/image/SeeYouAgain.jpg'))
+              '2024-01-01',
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .labelLarge
+                  ?.copyWith(fontWeight: FontWeight.w100),
+            )
           ],
         )
       ],
@@ -238,54 +225,55 @@ class _Section extends StatelessWidget {
   }
 }
 
-class _Post extends StatelessWidget {
+class _ResourceGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(right: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 120,
-              height: 160,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: const DecorationImage(
-                      image: AssetImage('assets/image/SeeYouAgain.jpg'),
-                      fit: BoxFit.cover)),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              width: 120,
-              child: Text(
-                'Shatter Me',
-                maxLines: 1,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(fontWeight: FontWeight.bold),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              width: 120,
-              child: Text(
-                '01/01 00:00',
-                maxLines: 1,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall
-                    ?.copyWith(color: Colors.black.withOpacity(0.6)),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ));
+    return Expanded(
+      child: GridView.builder(
+          itemCount: 100,
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 120,
+              mainAxisExtent: 180,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10),
+          itemBuilder: (context, index) => _ResourceItem()),
+    );
+  }
+}
+
+class _ResourceItem extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+        onTap: () {},
+        child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Ink.image(
+                  image: AssetImage('assets/image/CalmDown.jpg'),
+                  fit: BoxFit.cover,
+                  height: 100,
+                  width: 120,
+                ),
+                Text(
+                  'See You Again',
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(overflow: TextOverflow.visible),
+                ),
+                Opacity(opacity: 0.6, child: Text(
+                  'up 2024-01-01',
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(overflow: TextOverflow.visible),
+                ) ,),
+
+              ],
+            )));
   }
 }

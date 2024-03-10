@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_project/page/home.dart';
 import 'package:get/get.dart';
 
@@ -18,8 +16,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: Theme.of(context).copyWith(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.indigo,
-            )),
+          seedColor: Colors.indigo,
+        )),
         home: const Responsive());
   }
 }
@@ -32,13 +30,12 @@ class Responsive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) =>
-        switch (
-        constraints.maxWidth) {
-          <= 650 => Mobile(),
-          > 650 && <= 1100 => Tablet(),
-          _ => Tablet()
-        });
+        builder: (BuildContext context, BoxConstraints constraints) => switch (
+                constraints.maxWidth) {
+              <= 650 => Mobile(),
+              > 650 && <= 1100 => Tablet(),
+              _ => Tablet()
+            });
   }
 }
 
@@ -50,12 +47,12 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme
-          .of(context)
-          .colorScheme
-          .surface,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       actions: [
-        IconButton(icon: Icon(Icons.person), onPressed: () {},),
+        IconButton(
+          icon: Icon(Icons.person),
+          onPressed: () {},
+        ),
         IconButton(
           onPressed: () {},
           icon: const Icon(Icons.notifications),
@@ -98,17 +95,17 @@ class Tablet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Row(
+      children: [
+        _Drawer(selectedIndex: selectedIndex),
+        Expanded(
+            child: Column(
           children: [
-            _Drawer(selectedIndex: selectedIndex),
-            Expanded(
-                child: Column(
-                  children: [
-                    _AppBar(),
-                    Obx(() => Expanded(child: drawerList[selectedIndex.value]))
-                  ],
-                ))
+            _AppBar(),
+            Obx(() => Expanded(child: drawerList[selectedIndex.value]))
           ],
-        ));
+        ))
+      ],
+    ));
   }
 }
 
@@ -124,18 +121,14 @@ class _Drawer extends StatelessWidget {
       if (Navigator.canPop(context)) Navigator.pop(context);
     }
 
-    return Obx(() =>
-        NavigationDrawer(
+    return Obx(() => NavigationDrawer(
             onDestinationSelected: onTapped,
             selectedIndex: selectedIndex.value,
             children: [
               DrawerHeader(
                 child: Text(
                   'Drawer Header',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleLarge,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
               const NavigationDrawerDestination(

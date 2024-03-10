@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 // Include the Google Fonts package to provide more text format options
 // https://pub.dev/packages/google_fonts
 
@@ -57,8 +58,8 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title,
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: Theme.of(context).colorScheme.onSecondary,
-            )),
+                  color: Theme.of(context).colorScheme.onSecondary,
+                )),
         backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
       body: Center(
@@ -74,8 +75,8 @@ class MyHomePage extends StatelessWidget {
             //           or change the Theme.of(context).textTheme
             //           to "displayLarge" or "displaySmall".
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
           ),
         ),
       ),
