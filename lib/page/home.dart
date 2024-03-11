@@ -1,5 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -19,14 +21,14 @@ class Home extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
+                _StorageUsage(),
+                const SizedBox(
+                  height: 16,
+                ),
                 _Category(),
                 const SizedBox(
                   height: 16,
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
-                _StorageUsage()
               ],
             )));
   }
@@ -170,10 +172,36 @@ class _CategoryButton extends StatelessWidget {
 
 class _StorageUsage extends StatelessWidget {
   final sectionData = [
-    PieChartSectionData(value: 1, title: '视频', color: Colors.cyanAccent),
-    PieChartSectionData(value: 2, title: '音频', color: Colors.lightBlue),
-    PieChartSectionData(value: 2, title: '图片', color: Colors.amberAccent),
-    PieChartSectionData(value: 3, title: '空闲', color: Colors.lightGreen),
+    PieChartSectionData(
+        value: 0.1,
+        title: '视频',
+        color: Colors.cyanAccent,
+        radius: 80,
+        ),
+    PieChartSectionData(
+        value: 2,
+        title: '音频',
+        color: Colors.lightBlueAccent,
+        radius: 80,
+       ),
+    PieChartSectionData(
+        value: 2,
+        title: '图片',
+        color: Colors.amberAccent,
+        radius: 80,
+       ),
+    PieChartSectionData(
+        value: 2,
+        title: '文档',
+        color: Colors.tealAccent,
+        radius: 80,
+        ),
+    PieChartSectionData(
+      value: 3,
+      title: '空闲',
+      color: Colors.indigo,
+      radius: 80,
+    ),
   ];
 
   @override
@@ -182,20 +210,32 @@ class _StorageUsage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const _Caption(title: '存储使用'),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _StorageChart(
               sectionData: sectionData,
             ),
-            Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: sectionData
-                    .map((x) => _StorageIndicator(
-                        color: x.color,
-                        label: x.title,
-                        value: '${x.value.toString()}GB'))
-                    .toList()),
+            SizedBox(
+                height: 100,
+                width: 300,
+                child: GridView(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisExtent: 40,
+                    ),
+                    children: sectionData
+                        .map(
+                          (x) => Container(
+                            child: _StorageIndicator(
+                                color: x.color,
+                                label: x.title,
+                                value: '${x.value.toString()}GB'),
+                          ),
+                        )
+                        .toList())),
           ],
         ),
       ],
@@ -210,11 +250,11 @@ class _StorageChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      width: 200,
-      child:
-          PieChart(PieChartData(sections: sectionData, centerSpaceRadius: 40,sectionsSpace:10)),
+    return Container(
+      height: 160,
+      width: 160,
+      child: PieChart(PieChartData(
+          sections: sectionData, centerSpaceRadius: 0, startDegreeOffset: 12)),
     );
   }
 }
@@ -266,17 +306,20 @@ class _Caption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-      ],
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+        ],
+      ),
     );
   }
 }

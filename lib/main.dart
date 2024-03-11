@@ -88,8 +88,6 @@ class Mobile extends StatelessWidget {
 
 class Tablet extends StatelessWidget {
   final selectedIndex = 0.obs;
-  final drawerList = <Widget>[const Home(), const DrawerTwo()];
-
   Tablet({super.key});
 
   @override
