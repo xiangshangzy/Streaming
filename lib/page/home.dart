@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -22,11 +23,10 @@ class Home extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                _Caption(),
                 const SizedBox(
                   height: 16,
                 ),
-                _ResourceGrid()
+                _StorageUsage()
               ],
             )));
   }
@@ -43,10 +43,7 @@ class _Header extends StatelessWidget {
           borderRadius: const BorderRadius.all(
             Radius.circular(24),
           ),
-          color: Theme
-              .of(context)
-              .colorScheme
-              .primary,
+          color: Theme.of(context).colorScheme.primary,
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -58,22 +55,20 @@ class _Header extends StatelessWidget {
                 children: [
                   Text(
                     'Welcome, Alice',
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .titleLarge
                         ?.copyWith(color: Colors.grey[200]),
                   ),
                   const CircleAvatar(
                     backgroundImage:
-                    AssetImage('assets/image/logo-gia-developer.png'),
+                        AssetImage('assets/image/logo-gia-developer.png'),
                   )
                 ],
               ),
               Text(
                 'What Would you like',
-                style: Theme
-                    .of(context)
+                style: Theme.of(context)
                     .textTheme
                     .titleSmall
                     ?.copyWith(color: Colors.grey[100]),
@@ -86,10 +81,7 @@ class _Header extends StatelessWidget {
                     prefixIcon: Icon(
                       Icons.search,
                       size: 24,
-                      color: Theme
-                          .of(context)
-                          .colorScheme
-                          .primary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     hintText: 'Search Media File',
                     border: const OutlineInputBorder(
@@ -107,20 +99,11 @@ class _Header extends StatelessWidget {
 class _Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Storage Category',
-          style: Theme
-              .of(context)
-              .textTheme
-              .titleLarge,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        const Row(
+        _Caption(title: '存储类型'),
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _CategoryButton(
@@ -157,10 +140,7 @@ class _CategoryButton extends StatelessWidget {
     return Material(
       elevation: 4,
       borderRadius: BorderRadius.circular(8),
-      color: Theme
-          .of(context)
-          .colorScheme
-          .surface,
+      color: Theme.of(context).colorScheme.surface,
       child: InkWell(
           onTap: () {},
           child: SizedBox(
@@ -172,20 +152,14 @@ class _CategoryButton extends StatelessWidget {
                 Icon(
                   icon,
                   size: 36,
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .primary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(
                   height: 2,
                 ),
                 Text(
                   text,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 )
               ],
             ),
@@ -194,86 +168,112 @@ class _CategoryButton extends StatelessWidget {
   }
 }
 
-class _Caption extends StatelessWidget {
+class _StorageUsage extends StatelessWidget {
+  final sectionData = [
+    PieChartSectionData(value: 1, title: '视频', color: Colors.indigo),
+    PieChartSectionData(value: 2, title: '音频', color: Colors.lightBlue),
+    PieChartSectionData(value: 2, title: '图片', color: Colors.purpleAccent),
+    PieChartSectionData(value: 3, title: '剩余', color: Colors.grey[300]),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Home',
-          style: Theme
-              .of(context)
-              .textTheme
-              .titleLarge,
-        ),
+        const _Caption(title: '存储使用'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              '2024-01-01',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .labelLarge
-                  ?.copyWith(fontWeight: FontWeight.w100),
-            )
+            _StorageChart(
+              sectionData: sectionData,
+            ),
+            Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: sectionData
+                    .map((x) => _StorageIndicator(
+                        color: x.color,
+                        label: x.title,
+                        value: '${x.value.toString()}GB'))
+                    .toList()),
           ],
-        )
+        ),
       ],
     );
   }
 }
 
-class _ResourceGrid extends StatelessWidget {
+class _StorageChart extends StatelessWidget {
+  final List<PieChartSectionData> sectionData;
+
+  const _StorageChart({required this.sectionData});
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GridView.builder(
-          itemCount: 100,
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 120,
-              mainAxisExtent: 180,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10),
-          itemBuilder: (context, index) => _ResourceItem()),
+    return Container(
+      height: 150,
+      width: 200,
+      child: PieChart(
+          PieChartData(sections: sectionData, centerSpaceColor: Colors.indigo)),
     );
   }
 }
 
-class _ResourceItem extends StatelessWidget {
+class _StorageIndicator extends StatelessWidget {
+  final Color color;
+  final String label;
+  final String value;
+
+  const _StorageIndicator(
+      {required this.color, required this.label, required this.value});
+
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {},
-        child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Ink.image(
-                  image: AssetImage('assets/image/CalmDown.jpg'),
-                  fit: BoxFit.cover,
-                  height: 100,
-                  width: 120,
-                ),
-                Text(
-                  'See You Again',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(overflow: TextOverflow.visible),
-                ),
-                Opacity(opacity: 0.6, child: Text(
-                  'up 2024-01-01',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(overflow: TextOverflow.visible),
-                ) ,),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          backgroundColor: color,
+          radius: 8,
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Text(
+          label,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(
+          width: 4,
+        ),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ],
+    );
+  }
+}
 
-              ],
-            )));
+class _Caption extends StatelessWidget {
+  final String title;
+
+  const _Caption({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+      ],
+    );
   }
 }

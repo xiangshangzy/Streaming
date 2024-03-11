@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/page/home.dart';
+import 'package:flutter_project/page/my_resource.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-final drawerList = [const Home(), const DrawerTwo()];
+final drawerList = [const Home(),  const MyResource()];
 
 class Responsive extends StatelessWidget {
   const Responsive({super.key});
@@ -50,7 +51,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       actions: [
         IconButton(
-          icon: Icon(Icons.person),
+          icon: const Icon(Icons.person),
           onPressed: () {},
         ),
         IconButton(
@@ -100,7 +101,7 @@ class Tablet extends StatelessWidget {
         Expanded(
             child: Column(
           children: [
-            _AppBar(),
+            const _AppBar(),
             Obx(() => Expanded(child: drawerList[selectedIndex.value]))
           ],
         ))
