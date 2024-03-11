@@ -170,10 +170,10 @@ class _CategoryButton extends StatelessWidget {
 
 class _StorageUsage extends StatelessWidget {
   final sectionData = [
-    PieChartSectionData(value: 1, title: '视频', color: Colors.indigo),
+    PieChartSectionData(value: 1, title: '视频', color: Colors.cyanAccent),
     PieChartSectionData(value: 2, title: '音频', color: Colors.lightBlue),
-    PieChartSectionData(value: 2, title: '图片', color: Colors.purpleAccent),
-    PieChartSectionData(value: 3, title: '剩余', color: Colors.grey[300]),
+    PieChartSectionData(value: 2, title: '图片', color: Colors.amberAccent),
+    PieChartSectionData(value: 3, title: '空闲', color: Colors.lightGreen),
   ];
 
   @override
@@ -210,11 +210,11 @@ class _StorageChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
+    return SizedBox(
+      height: 200,
       width: 200,
-      child: PieChart(
-          PieChartData(sections: sectionData, centerSpaceColor: Colors.indigo)),
+      child:
+          PieChart(PieChartData(sections: sectionData, centerSpaceRadius: 40,sectionsSpace:10)),
     );
   }
 }
@@ -229,29 +229,32 @@ class _StorageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        CircleAvatar(
-          backgroundColor: color,
-          radius: 8,
-        ),
-        const SizedBox(
-          width: 2,
-        ),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          value,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ],
+    return SizedBox(
+      width: 120,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            backgroundColor: color,
+            radius: 8,
+          ),
+          const SizedBox(
+            width: 2,
+          ),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(
+            width: 4,
+          ),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ],
+      ),
     );
   }
 }
