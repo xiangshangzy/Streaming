@@ -1,7 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -173,34 +171,34 @@ class _CategoryButton extends StatelessWidget {
 class _StorageUsage extends StatelessWidget {
   final sectionData = [
     PieChartSectionData(
-        value: 0.1,
-        title: '视频',
-        color: Colors.cyanAccent,
-        radius: 80,
-        ),
+      value: 0.1,
+      title: '视频',
+      color: Colors.cyanAccent,
+      showTitle: false,
+    ),
     PieChartSectionData(
-        value: 2,
-        title: '音频',
-        color: Colors.lightBlueAccent,
-        radius: 80,
-       ),
+      value: 2,
+      title: '音频',
+      color: Colors.lightBlueAccent,
+      showTitle: false,
+    ),
     PieChartSectionData(
-        value: 2,
-        title: '图片',
-        color: Colors.amberAccent,
-        radius: 80,
-       ),
+      value: 2,
+      title: '图片',
+      color: Colors.amberAccent,
+      showTitle: false,
+    ),
     PieChartSectionData(
-        value: 2,
-        title: '文档',
-        color: Colors.tealAccent,
-        radius: 80,
-        ),
+      value: 2,
+      title: '文档',
+      color: Colors.tealAccent,
+      showTitle: false,
+    ),
     PieChartSectionData(
       value: 3,
       title: '空闲',
-      color: Colors.indigo,
-      radius: 80,
+      showTitle: false,
+      color: Colors.deepOrangeAccent,
     ),
   ];
 
@@ -210,21 +208,23 @@ class _StorageUsage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const _Caption(title: '存储使用'),
-        Column(
+        Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _StorageChart(
               sectionData: sectionData,
             ),
+            SizedBox(width: 8,),
             SizedBox(
                 height: 100,
-                width: 300,
+                width: 200,
                 child: GridView(
+                    scrollDirection: Axis.horizontal,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
-                      mainAxisExtent: 40,
+                      mainAxisExtent: 100,
                     ),
                     children: sectionData
                         .map(
@@ -253,8 +253,8 @@ class _StorageChart extends StatelessWidget {
     return Container(
       height: 160,
       width: 160,
-      child: PieChart(PieChartData(
-          sections: sectionData, centerSpaceRadius: 0, startDegreeOffset: 12)),
+      child:
+          PieChart(PieChartData(sections: sectionData, startDegreeOffset: 12)),
     );
   }
 }
