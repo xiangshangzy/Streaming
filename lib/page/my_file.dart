@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MyResource extends StatelessWidget{
+class MyResource extends StatelessWidget {
   const MyResource({super.key});
 
   @override
@@ -62,56 +62,46 @@ class _ResourceGrid extends StatelessWidget {
           itemCount: 100,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200,
-              mainAxisExtent: 200,
+              mainAxisExtent: 210,
               crossAxisSpacing: 20,
               mainAxisSpacing: 20),
-          itemBuilder: (context, index) => _ResourceItem()),
+          itemBuilder: (context, index) => _FileItem()),
     );
   }
 }
 
-class _ResourceItem extends StatelessWidget {
+class _FileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-        elevation: 3,
+    return Card(
         child: InkWell(
-          onTap: () {},
-          child: Container(
-            width: 180,
-            padding: EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(
-                  'assets/image/CalmDown.jpg',
-                  fit: BoxFit.cover,
-                  height: 120,
-                  width: 180,
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'See You Again',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(overflow: TextOverflow.ellipsis),
-                ),
-
-                Opacity(
-                  opacity: 0.8,
-                  child: Text(
-                    'up 2024-01-01',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(overflow: TextOverflow.ellipsis),
-                  ),
-                ),
-              ],
+      borderRadius: BorderRadius.circular(8),
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            Ink.image(
+              image: const AssetImage(
+                'assets/images/CalmDown.jpg',
+              ),
+              fit: BoxFit.cover,
+              height: 120,
+              width: 180,
             ),
-          ),
-        ));
+            const ListTile(
+              title: Text(
+                'See You Again',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Text('30days before',
+                  maxLines: 2, overflow: TextOverflow.ellipsis),
+              contentPadding: EdgeInsets.all(0),
+            )
+          ],
+        ),
+      ),
+    ));
   }
 }
-

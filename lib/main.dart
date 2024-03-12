@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/page/home.dart';
-import 'package:flutter_project/page/my_resource.dart';
+import 'package:flutter_project/page/my_file.dart';
 import 'package:get/get.dart';
 
 void main() {

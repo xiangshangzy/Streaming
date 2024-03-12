@@ -33,6 +33,7 @@ dependencies:
   get: 4.6.6
   video_player: 2.8.2
   fl_chart: 0.66.2
+  carousel_slider: ^4.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -60,9 +61,15 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
   assets:
-    - assets/image/
+    - assets/images/
+    - assets/images/raster/
+    - assets/images/vector/
+  fonts:
+    - family: FileIcons
+      fonts:
+        - asset: assets/fonts/FileIcons.ttf
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

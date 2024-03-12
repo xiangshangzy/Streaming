@@ -1,5 +1,8 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project/model/file_detail.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -11,31 +14,164 @@ class Home extends StatelessWidget {
           onPressed: () => {},
           child: const Icon(Icons.refresh),
         ),
-        body: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                _Header(),
-                const SizedBox(
-                  height: 16,
-                ),
-                _StorageUsage(),
-                const SizedBox(
-                  height: 16,
-                ),
-                _Category(),
-                const SizedBox(
-                  height: 16,
-                ),
-              ],
-            )));
+        body: SingleChildScrollView(
+            child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    _Banner(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _StorageUsage(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _Category(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _RecentFile()
+                  ],
+                ))));
+  }
+}
+
+class _Banner extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      items: [
+        _BannerItem(
+            title: 'Work and Private document',
+            serviceName: '免费版',
+            totalStorage: '1 GB',
+            asset: ImageRaster.megaphone,
+            color: Colors.orange),
+        _BannerItem(
+            title: 'Save Your happy moment',
+            serviceName: '标准版',
+            totalStorage: '10 GB',
+            asset: ImageRaster.rocket,
+            color: Colors.blue),
+        _BannerItem(
+            title: 'Welcome the best content creator',
+            serviceName: '商业版',
+            totalStorage: '50 GB',
+            asset: ImageRaster.boxCoins,
+            color: Colors.red),
+      ],
+      options: CarouselOptions(
+          height: 200, enlargeCenterPage: true, enableInfiniteScroll: true),
+    );
+  }
+}
+
+class _BannerItem extends StatelessWidget {
+  final String title;
+  final String serviceName;
+  final String totalStorage;
+  final String asset;
+  final Color color;
+
+  const _BannerItem(
+      {super.key,
+      required this.title,
+      required this.serviceName,
+      required this.totalStorage,
+      required this.color,
+      required this.asset});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 160,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [color, color.withOpacity(.5)]),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+              color: color.withOpacity(.5),
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: Offset(0, 5))
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(color: Colors.white),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 60,
+                    alignment: Alignment.center,
+                    child: Text(
+                      serviceName,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(color: Colors.white),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  Container(
+                    width: 60,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)),
+                    alignment: Alignment.center,
+                    child: Text(
+                      totalStorage,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: color),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              Image.asset(
+                asset,
+                fit: BoxFit.contain,
+                height: 80,
+                width: 80,
+              )
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
 
 class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
         width: double.infinity,
         height: 200,
@@ -169,41 +305,40 @@ class _CategoryButton extends StatelessWidget {
 }
 
 class _StorageUsage extends StatelessWidget {
-  final sectionData = [
-    PieChartSectionData(
-      value: 0.1,
-      title: '视频',
-      color: Colors.cyanAccent,
-      showTitle: false,
-    ),
-    PieChartSectionData(
-      value: 2,
-      title: '音频',
-      color: Colors.lightBlueAccent,
-      showTitle: false,
-    ),
-    PieChartSectionData(
-      value: 2,
-      title: '图片',
-      color: Colors.amberAccent,
-      showTitle: false,
-    ),
-    PieChartSectionData(
-      value: 2,
-      title: '文档',
-      color: Colors.tealAccent,
-      showTitle: false,
-    ),
-    PieChartSectionData(
-      value: 3,
-      title: '空闲',
-      showTitle: false,
-      color: Colors.deepOrangeAccent,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final sectionData = [
+      PieChartSectionData(
+        value: 1,
+        title: '视频',
+        color: Colors.cyanAccent,
+        showTitle: false,
+      ),
+      PieChartSectionData(
+        value: 2,
+        title: '音频',
+        color: Colors.lightBlueAccent,
+        showTitle: false,
+      ),
+      PieChartSectionData(
+        value: 2,
+        title: '图片',
+        color: Colors.amberAccent,
+        showTitle: false,
+      ),
+      PieChartSectionData(
+        value: 2,
+        title: '文档',
+        color: Colors.tealAccent,
+        showTitle: false,
+      ),
+      PieChartSectionData(
+        value: 3,
+        title: '空闲',
+        showTitle: false,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -215,9 +350,11 @@ class _StorageUsage extends StatelessWidget {
             _StorageChart(
               sectionData: sectionData,
             ),
-            SizedBox(width: 8,),
+            const SizedBox(
+              width: 16,
+            ),
             SizedBox(
-                height: 100,
+                height: 120,
                 width: 200,
                 child: GridView(
                     scrollDirection: Axis.horizontal,
@@ -228,12 +365,10 @@ class _StorageUsage extends StatelessWidget {
                     ),
                     children: sectionData
                         .map(
-                          (x) => Container(
-                            child: _StorageIndicator(
-                                color: x.color,
-                                label: x.title,
-                                value: '${x.value.toString()}GB'),
-                          ),
+                          (x) => _StorageIndicator(
+                              color: x.color,
+                              label: x.title,
+                              value: '${x.value.toString()}GB'),
                         )
                         .toList())),
           ],
@@ -250,11 +385,10 @@ class _StorageChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 160,
-      width: 160,
-      child:
-          PieChart(PieChartData(sections: sectionData, startDegreeOffset: 12)),
+    return SizedBox(
+      height: 120,
+      width: 120,
+      child: PieChart(PieChartData(sections: sectionData)),
     );
   }
 }
@@ -283,17 +417,69 @@ class _StorageIndicator extends StatelessWidget {
             width: 2,
           ),
           Text(
-            label,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(
-            width: 4,
-          ),
-          Text(
-            value,
+            '$label $value',
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _RecentFile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final files = [
+      FileDetail('word.docx', 2000, FileType.msWord),
+      FileDetail('word.docx', 2000, FileType.msPowerPoint),
+      FileDetail('word.docx', 2000, FileType.msExcel),
+      FileDetail('word.docx', 2000, FileType.msWord),
+      FileDetail('word.docx', 2000, FileType.msWord),
+      FileDetail('word.docx', 2000, FileType.msWord),
+    ];
+    return Column(
+      children: [
+        _Caption(title: '最近浏览'),
+        Column(
+          children: files
+              .map((x) => _FileListItem(file: x, onPressed: () {}))
+              .toList(),
+        )
+      ],
+    );
+  }
+}
+
+class _FileListItem extends StatelessWidget {
+  final FileDetail file;
+  final Function() onPressed;
+
+  const _FileListItem({super.key, required this.file, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(5),
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: ListTile(
+        leading: file.getFileIcon(),
+        title: Text(
+          file.name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: Text(
+          file.getFileSize(),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        onTap: onPressed,
+        trailing: IconButton(
+          onPressed: onPressed,
+          icon: Icon(Icons.more_vert_outlined),
+          tooltip: 'more',
+        ),
       ),
     );
   }
